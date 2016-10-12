@@ -8,7 +8,7 @@ import ca.ulaval.glo4002.carregistry.domain.Car;
 import ca.ulaval.glo4002.carregistry.domain.CarFactory;
 import ca.ulaval.glo4002.carregistry.domain.CarOwner;
 import ca.ulaval.glo4002.carregistry.domain.CarRegistry;
-import ca.ulaval.glo4002.carregistry.persistence.InMemoryCarRegistry;
+import ca.ulaval.glo4002.carregistry.persistence.HibernateCarRegistry;
 import ca.ulaval.glo4002.carregistry.services.dto.CarCreationRequest;
 import ca.ulaval.glo4002.carregistry.services.dto.CarOwnerDto;
 
@@ -19,7 +19,7 @@ public class RegistryService {
 	private CarOwnerAssember carOwnerAssember;
 
 	public RegistryService() {
-		this.carRegistry = new InMemoryCarRegistry();
+		this.carRegistry = new HibernateCarRegistry();
 		this.carFactory = new CarFactory();
 		this.carOwnerAssember = new CarOwnerAssember();
 	}
