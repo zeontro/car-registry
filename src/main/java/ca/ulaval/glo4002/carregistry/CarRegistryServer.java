@@ -14,7 +14,7 @@ public class CarRegistryServer {
 	  public static void main(String[] args) {
 	        new CarRegistryServer().run();
 	    }
-	 
+
 	    public void run() {
 	    	prefillDatabase();
 	        startServer();
@@ -28,7 +28,7 @@ public class CarRegistryServer {
 
 		private void startServer() {
 			int httpPort = 9595;
-	 
+
 	        Server server = new Server(httpPort);
 	        ServletContextHandler servletContextHandler = new ServletContextHandler(server, "/");
 	        configurerJersey(servletContextHandler);
@@ -41,7 +41,7 @@ public class CarRegistryServer {
 				server.destroy();
 			}
 		}
-	 
+
 	    private void configurerJersey(ServletContextHandler servletContextHandler) {
 	        ServletContainer container = new ServletContainer(new ResourceConfig().packages("ca.ulaval.glo4002.carregistry.rest"));
 	        ServletHolder jerseyServletHolder = new ServletHolder(container);
