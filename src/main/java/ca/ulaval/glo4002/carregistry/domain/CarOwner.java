@@ -3,18 +3,20 @@ package ca.ulaval.glo4002.carregistry.domain;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.ElementCollection;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity(name = "CarOwner")
 public class CarOwner {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String name;
-	@ElementCollection
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Car> cars = new LinkedList<>();
 
 	public CarOwner(String name) {
