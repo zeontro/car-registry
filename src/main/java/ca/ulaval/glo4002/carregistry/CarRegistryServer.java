@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.carregistry;
 
 import java.util.EnumSet;
 
+import javax.persistence.EntityManager;
 import javax.servlet.DispatcherType;
 
 import org.eclipse.jetty.server.Server;
@@ -12,6 +13,8 @@ import org.glassfish.jersey.servlet.ServletContainer;
 
 import ca.ulaval.glo4002.carregistry.domain.CarOwner;
 import ca.ulaval.glo4002.carregistry.domain.CarRegistry;
+import ca.ulaval.glo4002.carregistry.persistence.EntityManagerFactoryProvider;
+import ca.ulaval.glo4002.carregistry.persistence.EntityManagerProvider;
 import ca.ulaval.glo4002.carregistry.persistence.HibernateCarRegistry;
 import ca.ulaval.glo4002.carregistry.rest.filters.EntityManagerContextFilter;
 
@@ -26,6 +29,11 @@ public class CarRegistryServer {
 	}
 
 	private void prefillDatabase() {
+		EntityManagerFactoryProvider entityFactoryProvider = new EntityManagerFactoryProvider();
+		EntityManagerContextFilter entityContextFilter = new EntityManagerContextFilter();
+		EntityManagerProvider entityManagerProvider = new EntityManagerProvider();
+		EntityManager entityManager = entityFactoryProvider.getFactory().createEntityManager();
+
 		CarRegistry carRegistry = new HibernateCarRegistry();
 		carRegistry.insert(new CarOwner("John Doe"));
 		carRegistry.insert(new CarOwner("Jane Doe"));
@@ -36,6 +44,7 @@ public class CarRegistryServer {
 
 		Server server = new Server(httpPort);
 		ServletContextHandler servletContextHandler = new ServletContextHandler(server, "/");
+		servletContextHandler.addFilter(EntityManagerContextFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
 		configurerJersey(servletContextHandler);
 		try {
 			server.start();
@@ -52,7 +61,6 @@ public class CarRegistryServer {
 				new ResourceConfig().packages("ca.ulaval.glo4002.carregistry.rest"));
 		ServletHolder jerseyServletHolder = new ServletHolder(container);
 		servletContextHandler.addServlet(jerseyServletHolder, "/*");
-		servletContextHandler.addFilter(EntityManagerContextFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
 
 	}
 }
