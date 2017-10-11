@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.carregistry;
 import java.util.EnumSet;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.servlet.DispatcherType;
 
 import org.eclipse.jetty.server.Server;
@@ -29,10 +30,9 @@ public class CarRegistryServer {
 	}
 
 	private void prefillDatabase() {
-		EntityManagerFactoryProvider entityFactoryProvider = new EntityManagerFactoryProvider();
-		EntityManagerContextFilter entityContextFilter = new EntityManagerContextFilter();
-		EntityManagerProvider entityManagerProvider = new EntityManagerProvider();
-		EntityManager entityManager = entityFactoryProvider.getFactory().createEntityManager();
+		EntityManagerFactory entityFactoryProvider = EntityManagerFactoryProvider.getFactory();
+		EntityManager entityManager = entityFactoryProvider.createEntityManager();
+		EntityManagerProvider.setEntityManager(entityManager);
 
 		CarRegistry carRegistry = new HibernateCarRegistry();
 		carRegistry.insert(new CarOwner("John Doe"));
