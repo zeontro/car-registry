@@ -12,7 +12,7 @@ import org.glassfish.jersey.servlet.ServletContainer;
 
 import ca.ulaval.glo4002.carregistry.domain.CarOwner;
 import ca.ulaval.glo4002.carregistry.domain.CarRegistry;
-import ca.ulaval.glo4002.carregistry.persistence.InMemoryCarRegistry;
+import ca.ulaval.glo4002.carregistry.persistence.HibernateCarRegistry;
 import ca.ulaval.glo4002.carregistry.rest.filters.EntityManagerContextFilter;
 
 public class CarRegistryServer {
@@ -26,7 +26,7 @@ public class CarRegistryServer {
 	}
 
 	private void prefillDatabase() {
-		CarRegistry carRegistry = new InMemoryCarRegistry();
+		CarRegistry carRegistry = new HibernateCarRegistry();
 		carRegistry.insert(new CarOwner("John Doe"));
 		carRegistry.insert(new CarOwner("Jane Doe"));
 	}

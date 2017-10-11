@@ -16,13 +16,12 @@ public class HibernateCarRegistry implements CarRegistry {
 
 	@Override
 	public CarOwner findOwner(int ownerId) {
-		// TODO Auto-generated method stub
+		entityManager.find(null, ownerId);
 		return null;
 	}
 
 	@Override
 	public void insert(CarOwner owner) {
-		// TODO Auto-generated method stub
 
 	}
 
