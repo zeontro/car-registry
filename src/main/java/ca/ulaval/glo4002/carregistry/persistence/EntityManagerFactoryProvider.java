@@ -8,7 +8,7 @@ public class EntityManagerFactoryProvider {
 
 	public static EntityManagerFactory getFactory() {
 		if (instance == null) {
-			instance = Persistence.createEntityManagerFactory("hibernate-example");
+			instance = Persistence.createEntityManagerFactory("car-registry");
 		}
 		return instance;
 	}
