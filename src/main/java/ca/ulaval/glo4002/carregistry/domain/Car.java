@@ -1,10 +1,14 @@
 package ca.ulaval.glo4002.carregistry.domain;
 
-public class Car {
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity(name = "Car")
+public class Car {
+	@Id
 	private int id;
 	private String plate;
-	
+
 	public Car(String plate) {
 		this.plate = plate;
 	}
@@ -24,6 +28,5 @@ public class Car {
 	public void setPlate(String plate) {
 		this.plate = plate;
 	}
-	
-	
+
 }
