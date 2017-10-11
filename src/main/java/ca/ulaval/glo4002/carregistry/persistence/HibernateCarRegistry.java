@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.carregistry.persistence;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 
@@ -9,6 +11,7 @@ import ca.ulaval.glo4002.carregistry.domain.CarRegistry;
 
 public class HibernateCarRegistry implements CarRegistry {
 	private EntityManager entityManager;
+	private Map<Integer, CarOwner> owners = new HashMap<>();
 
 	public HibernateCarRegistry() {
 		this.setEntityManager(new EntityManagerProvider().getEntityManager());
@@ -16,25 +19,25 @@ public class HibernateCarRegistry implements CarRegistry {
 
 	@Override
 	public CarOwner findOwner(int ownerId) {
-		entityManager.find(null, ownerId);
-		return null;
+		return entityManager.find(null, ownerId);
 	}
 
 	@Override
 	public void insert(CarOwner owner) {
-
+		entityManager.persist(owner);
 	}
 
 	@Override
 	public void update(CarOwner owner) {
-		// TODO Auto-generated method stub
-
+		if (!entityManager.contains(owner)) {
+			this.insert(owner);
+		}
 	}
 
 	@Override
 	public Collection<CarOwner> findAllOwners() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return owners.values();
 	}
 
 	public EntityManager getEntityManager() {
